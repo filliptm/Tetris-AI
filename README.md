@@ -1,2 +1,1 @@
-"# Tetris AI Project" 
-"# Tetris-AI" 
+![Screenshot 2024-09-25 090249.png](Screenshot%202024-09-25%20090249.png)
