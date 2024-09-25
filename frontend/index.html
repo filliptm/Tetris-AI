@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris AI Visualization</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body>
+    <div id="container">
+        <h1>Tetris AI Visualization</h1>
+        <div id="game-container">
+            <canvas id="gameCanvas" width="300" height="600"></canvas>
+            <div id="info-panel">
+                <div id="hyperparameters">
+                    <h3>Hyperparameters</h3>
+                    <label for="learning-rate">Learning Rate:</label>
+                    <input type="number" id="learning-rate" value="0.001" step="0.0001" min="0.0001" max="1">
+                    <label for="batch-size">Batch Size:</label>
+                    <input type="number" id="batch-size" value="32" step="1" min="1" max="1000">
+                    <label for="max-epochs">Max Epochs:</label>
+                    <input type="number" id="max-epochs" value="10000" step="1000" min="1000" max="1000000">
+                    <button id="updateHyperparameters">Update Hyperparameters</button>
+                </div>
+                <button id="startTraining">Start Training</button>
+                <button id="stopTraining">Stop Training</button>
+                <div id="training-info">
+                    <h3>Training Progress</h3>
+                    <p id="episode-info"></p>
+                    <p id="score-info"></p>
+                    <p id="loss-info"></p>
+                    <p id="epoch-info"></p>
+                    <p id="learning-rate-info"></p>
+                    <p id="loss-rate-info"></p>
+                    <p id="epsilon-info"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="main.js" type="module"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof io !== 'undefined') {
+                window.tetrisSocket = io();
+                window.tetrisSocket.on('connect', function() {
+                    console.log('Socket.IO connected');
+                    const event = new Event('socketReady');
+                    window.dispatchEvent(event);
+                });
+            } else {
+                console.error('Socket.IO failed to load');
+            }
+        });
+    </script>
+</body>
+</html>
